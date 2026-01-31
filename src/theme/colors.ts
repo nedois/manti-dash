@@ -26,13 +26,12 @@ const pink: MantineColorsTuple = ["#fdf2f8", "#fce7f3", "#fbcfe8", "#f9a8d4", "#
 const theme = {
   autoContrast: true,
   primaryColor: "primary",
-  primaryShade: { light: 6, dark: 5 },
+  primaryShade: { light: 5, dark: 6 },
   colors: {
     slate,
     gray,
     zinc,
     neutral,
-    stone,
 
     red,
     rose,
@@ -55,9 +54,9 @@ const theme = {
     fuchsia,
     pink,
 
-    primary: blue,
-    secondary: slate,
-    dark: slate,
+    primary: orange,
+    secondary: stone,
+    dark: stone,
 
     error: red,
     success: green,

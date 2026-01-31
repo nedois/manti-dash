@@ -20,7 +20,7 @@ interface PatchThemeOptions {
   defaultRadius?: MantineRadius
 }
 
-function patchMantineTheme(options: PatchThemeOptions) {
+function patchMantineTheme(theme: MantineTheme, options: PatchThemeOptions) {
   const newTheme: MantineThemeOverride = { ...options }
 
   if (options.primaryColor) {
@@ -28,31 +28,31 @@ function patchMantineTheme(options: PatchThemeOptions) {
 
     newTheme.primaryShade = primaryShade
     newTheme.colors = {
-      primary: defaultTheme.colors[options.primaryColor],
-      secondary: defaultTheme.colors[secondaryColor],
+      primary: theme.colors[options.primaryColor],
+      secondary: theme.colors[secondaryColor],
     }
   }
 
-  return mergeMantineTheme(defaultTheme, newTheme)
+  return mergeMantineTheme(theme, newTheme)
 }
 
 export const useThemeStore = create<ThemeStoreState>()(
   persist(
-    set => ({
+    (set, get) => ({
       colorScheme: "light" as const,
       theme: defaultTheme,
-      primaryColor: "orange",
+      primaryColor: defaultTheme.primaryColor as ThemeName,
       defaultRadius: defaultTheme.defaultRadius,
-      setDefaultRadius: defaultRadius => set({ defaultRadius, theme: patchMantineTheme({ defaultRadius }) }),
+      setDefaultRadius: defaultRadius => set({ defaultRadius, theme: patchMantineTheme(get().theme, { defaultRadius }) }),
       setColorScheme: colorScheme => set({ colorScheme }),
-      setPrimaryColor: primaryColor => set({ primaryColor, theme: patchMantineTheme({ primaryColor }) }),
+      setPrimaryColor: primaryColor => set({ primaryColor, theme: patchMantineTheme(get().theme, { primaryColor }) }),
     }),
     {
       name: "theme-storage",
       partialize: state => pick(state, ["primaryColor", "defaultRadius", "colorScheme"]),
       merge: (persisted: any, current) => ({
         ...merge(current, persisted),
-        theme: patchMantineTheme({
+        theme: patchMantineTheme(defaultTheme, {
           primaryColor: persisted.primaryColor,
           defaultRadius: persisted.defaultRadius,
         }),
