@@ -1,0 +1,13 @@
+.root {
+  background-color: var(--mantine-color-default);
+
+  &[data-variant='glow'] {
+    background-color: color-mix(in oklch, white 10%, transparent);
+    backdrop-filter: blur(8px);
+    border: 1px solid color-mix(in oklch, white 10%, transparent);
+  }
+}
+
+.section {
+  border-color: var(--mantine-color-default-border);
+}
