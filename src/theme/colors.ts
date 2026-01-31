@@ -32,6 +32,7 @@ const theme = {
     gray,
     zinc,
     neutral,
+    stone,
 
     red,
     rose,
