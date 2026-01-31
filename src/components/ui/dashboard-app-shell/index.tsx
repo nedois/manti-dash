@@ -2,7 +2,7 @@ import type { FC, ReactNode } from "react"
 import { ActionIcon, AppShell, Overlay, RemoveScroll } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import { Icon } from "@/components/ui/icon"
-import { useLargerThan } from "@/hooks/use-larger-than"
+import { useSmallerThan } from "@/hooks/use-smaller-than"
 import classes from "./dashboard-app-shell.module.css"
 
 interface SidebarProps {
@@ -20,10 +20,12 @@ export interface DashboardAppShellProps {
 
 export function DashboardAppShell({ children, header: Header, sidebar: Sidebar }: DashboardAppShellProps) {
   const [opened, { toggle, close, open }] = useDisclosure(true)
-  const isSm = useLargerThan("sm")
+  const smallerThanMd = useSmallerThan("md")
+
+  const showMenuOverlay = smallerThanMd && opened
 
   return (
-    <RemoveScroll enabled={isSm && opened}>
+    <RemoveScroll enabled={showMenuOverlay}>
       <AppShell
         layout="alt"
         padding="md"
@@ -44,7 +46,7 @@ export function DashboardAppShell({ children, header: Header, sidebar: Sidebar }
           <Sidebar openNavbar={open} closeNavbar={close} toggleNavbar={toggle} sidebarOpened={opened} />
         </AppShell.Navbar>
         <AppShell.Main className={classes.main}>{children}</AppShell.Main>
-        <Overlay display={opened ? "inherit" : "none"} className={classes.overlay} onClick={close} />
+        <Overlay display={showMenuOverlay ? "inherit" : "none"} className={classes.overlay} onClick={close} />
       </AppShell>
     </RemoveScroll>
   )

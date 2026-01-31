@@ -5,7 +5,7 @@ export function useSmallerThan(breakpoint: MantineBreakpoint): boolean {
   const theme = useMantineTheme()
 
   const key = Object.keys(theme.breakpoints).includes(breakpoint) ? theme.breakpoints[breakpoint] : breakpoint
-  const matches = useMediaQuery(`(min-width: ${key})`)
+  const matches = useMediaQuery(`(max-width: ${key})`)
 
   return matches
 }

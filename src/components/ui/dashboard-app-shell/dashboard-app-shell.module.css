@@ -20,8 +20,5 @@
 
 .overlay {
   z-index: 100;
-
-  @mixin larger-than $mantine-breakpoint-sm {
-    display: none !important;
-  }
+  width: 110%;
 }

@@ -16,7 +16,7 @@ export function Desktop() {
         <Card
           component={motion.div}
           variants={varFade("inDown", { distance: 40 })}
-          transition={{ delay: 0.5, duration: 0.6 }}
+          transition={{ delay: 0.5, duration: 0.3 }}
           radius="lg"
           shadow="xl"
         >
@@ -46,6 +46,7 @@ export function Desktop() {
                 ),
               }}
             />
+            <Box pos="absolute" inset="0" style={{ zIndex: 1 }} />
             <Box bd="none" h="100%" w="100%" component="iframe" title="Embedded" src="/dashboard/overview" />
           </Card.Section>
         </Card>
